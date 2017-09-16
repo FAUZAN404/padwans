@@ -6,7 +6,7 @@ import java.util.Date;
  * after the element was removed the size of the array should be equal to the number of stored elements
  * after the element was added the size of the array should be equal to the number of stored elements
  * null elements are not allowed to be stored in the array
- *
+ * 
  * You may add new methods, fields to this class, but DO NOT RENAME any given class, interface or method
  * DO NOT PUT any classes into packages
  *
@@ -14,7 +14,7 @@ import java.util.Date;
 public class StudentGroup implements StudentArrayOperation {
 
 	private Student[] students;
-
+	
 	/**
 	 * DO NOT remove or change this constructor, it will be used during task check
 	 * @param length
@@ -24,18 +24,18 @@ public class StudentGroup implements StudentArrayOperation {
 	}
 
     private boolean isNull(Student student){
-        return student == null;
+        return student == null || this.students == null;
     }
 
     private boolean isOutOfBounds(int index){
-        return index < 0 || index > this.students.length;
+        return index < 0 || index > this.students.length; 
     }
 
 	@Override
 	public Student[] getStudents() {
 		// If students array is not null return students array, else return null
         if (students != null){
-            return students;
+            return students; 
         }
 		return null;
 	}
@@ -68,7 +68,7 @@ public class StudentGroup implements StudentArrayOperation {
             throw new IllegalArgumentException();
         }
         this.students[index] = student;
-
+        
 	}
 
 	@Override
@@ -90,9 +90,9 @@ public class StudentGroup implements StudentArrayOperation {
         if ( isNull(student) || isOutOfBounds(index) ){
             throw new IllegalArgumentException();
         }
-        // if index ==0, add at the beginning
-        if ( index ==0 ){
-            // Create a new array with students.length + 1 and add it to the beginning
+        // if index ==0, add at the beginning 
+        if ( index ==0 ){ 
+            // Create a new array with students.length + 1 and add it to the beginning  
             int studentsLength = this.students.length;
             Student[] newStudents = new Student[ studentsLength + 1 ];
             newStudents[0] = student;
@@ -102,10 +102,10 @@ public class StudentGroup implements StudentArrayOperation {
             this.students = newStudents;
 
         }
-
-        // if index ==0, add at the end
-        if ( index == this.students.length ){
-             // Create a new array with students.length + 1 and add it to the beginning
+        
+        // if index ==0, add at the end 
+        if ( index == this.students.length ){ 
+             // Create a new array with students.length + 1 and add it to the beginning  
             int studentsLength = this.students.length;
             Student[] newStudents = new Student[ studentsLength + 1 ];
             for (int i=0; i < studentsLength; i++){
@@ -115,12 +115,12 @@ public class StudentGroup implements StudentArrayOperation {
             this.students = newStudents;
         }
         else {
-            // Add in between then
+            // Add in between then 
             int studentsLength = this.students.length;
             Student[] newStudents = new Student[ studentsLength + 1 ];
             for (int i=0; i < studentsLength; i++){
                     if ( i == index ){
-                        newStudents[i] = student;
+                        newStudents[i] = student; 
                     }
                     else{
                         newStudents[i] = this.students[i];
@@ -197,14 +197,14 @@ public class StudentGroup implements StudentArrayOperation {
                      newStudents[i]= this.students[i];
             }
         this.students = newStudents;
-        }
+        } 
         else {
             throw new IllegalArgumentException();
         }
     }
 
     private void removeByElement(Student student, int index){
-
+        
     }
 
 	@Override
@@ -230,8 +230,19 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getByBirthDate(Date date) {
+        Student[] newStudents = null;
 		// Add your implementation here
-		return null;
+        if (this.students == null ){
+            throw new IllegalArgumentException();
+        }
+        for ( int i=0,j=0; i < this.students.length; i++){
+            if (this.students[i].getBirthDate().equals (date)) {
+                    newStudents[j]= this.students[i];
+                            j =j+ 1;
+            }
+            
+        }
+		return newStudents;
 	}
 
 	@Override
@@ -254,31 +265,29 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
-		// Add your implementation here
-		return null;
+        return null;
 	}
 
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
-		// Add your implementation here
-		int studentsLength = this.students.length;
-		Student[] newStudents = new Student[ studentsLength + 1 ];
-		for (int i=0; i < studentsLength; i++){
-				avgmarks = this.student.getAvgMark();
-						if ( avgmarks >= student ){
-								newStudents[i] = student;
-						}
-						else{
-								newStudents[i] = this.students[i];
-						}
-		}
-		this.students = newStudents;
-		return newStudents;
-	}
+			// Add your implementation here
+        return null;
+    }
 
 	@Override
 	public Student getNextStudent(Student student) {
 		// Add your implementation here
-		return null;
+        Student newStudent = null ;
+
+        if ( isNull(student) ){
+            throw new IllegalArgumentException();
+        }
+
+        for (int i =0; i < this.students.length; i ++){
+                 if ( this.students[i].equals(student) && i+1 < this.students.length ){
+                         newStudent = this.students[i+1];
+                 }
+        }
+        return newStudent;
 	}
 }
